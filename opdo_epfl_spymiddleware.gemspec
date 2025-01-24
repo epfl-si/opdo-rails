@@ -1,0 +1,10 @@
+Gem::Specification.new do |s|
+  s.name        = "opdo_epfl_spymiddleware"
+  s.version     = "1.0.0"
+  s.summary     = "Get OPDo logs of RoR EPFL applications"
+  s.authors     = ["EPFL/FSD"]
+  s.files       = ["lib/opdo_epfl_spymiddleware.rb"]
+  s.license     = nil
+  s.homepage    = "https://www.epfl.ch/campus/services/data-protection/laws-and-regulations/fadp-and-gpdr/"
+  s.required_ruby_version = ">= 3.3.4"
+end
