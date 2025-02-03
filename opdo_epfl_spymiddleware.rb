@@ -30,7 +30,7 @@ class OPDo_EPFL_SpyMiddleware
 
   def user(req)
     u = req.env['warden'].user(:user)
-    u.nil? ? "NO AUTH" : u.slice(:name, :email).to_h
+    u.nil? ? "NO AUTH" : u.slice(:name, :email, :username).to_h
   end
 end
 
