@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class OPDo_EPFL_SpyMiddleware
   PATHSKIP_RE = %r{/(rails/|assets|path_to_skip)}
 
