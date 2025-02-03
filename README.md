@@ -26,7 +26,7 @@ In you gemFile, add a line :
 
 ```
 # OPDo for EPFL logs
-gem 'opdo_epfl_spymiddleeware', '1.0.0'
+gem 'opdo_epfl_spymiddleware', '1.0.0'
 ```
 
 # Add logrotate
