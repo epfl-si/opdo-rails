@@ -34,7 +34,7 @@ module OPDO_EPFL_Middleware
 
 		def user(req)
 			u = req.env['warden']&.user(:user)
-			if u.nil?
+			if u.nil? && defined?(Current) && Current.respond_to?(:user)
 				u = Current.user
 			end
 			u.nil? ? "NO AUTH" : u.slice(:name, :email, :username).to_h
