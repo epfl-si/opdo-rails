@@ -7,8 +7,6 @@ module OPDO_EPFL_Middleware
 
 		def initialize(app)
 			@app = app
-			@file_logger = Logger.new('/tmp/opdo_epfl_spymiddleware.log')
-			@file_logger.info("===> OPDo EPFL Spy is starting")
 		end
 
 		def call(env)
@@ -20,16 +18,18 @@ module OPDO_EPFL_Middleware
 		def spy(env)
 			req = Rack::Request.new env
 			return if req.path =~ PATHSKIP_RE
-
+			us = user(req)
+			return if us === "NO AUTH"
 			route = Rails.application.routes.recognize_path(req.path)
-			report = {
-				'time' => Time.zone.now.strftime('%Y%m%d-%H%M-%s'),
-				'user' => user(req),
-				'path' => req.path,
-				'params' => req.params,
-				'route' => route,
-			}
-			@file_logger.debug("=== #{report.to_yaml}")
+			report = [
+				"#{Time.now.iso8601(3)}",
+				"#{user(req)}",
+				"#{req.params}",
+				"#{req.path}",
+				"#{req.ip}",
+				"#{route}"
+			]
+			OPDO_EPFL_LOGGER.info("#{report.to_csv(:col_sep => ";", :quote_char => '"')}")
 		end
 
 		def user(req)
@@ -37,7 +37,7 @@ module OPDO_EPFL_Middleware
 			if u.nil? && defined?(Current) && Current.respond_to?(:user)
 				u = Current.user
 			end
-			u.nil? ? "NO AUTH" : u.slice(:name, :email, :username).to_h
+			u.nil? ? "NO AUTH" : u.username   # u.email, u.name
 		end
 	end
 
