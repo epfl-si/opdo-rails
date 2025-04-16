@@ -29,3 +29,22 @@ gitlab-ctl restart
 ```
 
 A log file will be created in ```/tmp/opdo_epfl_spymiddleware.csv```
+
+
+# Development
+
+Go to gitlab initializers repository
+
+```
+cd /opt/gitlab/embedded/service/gitlab-rails/config/initializers
+```
+
+Add file : opdo_epfl_spymiddleware.rb in the initializers repository
+
+Restart gitlab : 
+
+```
+gitlab-ctl restart 
+```
+
+A log file will be created in ```/tmp/opdo_epfl_spymiddleware.log```
