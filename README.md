@@ -1,50 +1,32 @@
-This gem adds a specific middleware to get the username and the activity in a log located in tmp.
+OPDo for Rails
+==============
 
+[![ImageRuby](https://img.shields.io/badge/ruby-3.0.0-green)]()
 
-# Add gem
+This gem adds a spy middleware that logs the username and activity to a file in /tmp.
 
-Go to the gems repository, p.e. for gitlab :
+# Prerequisites
 
-```
-cd /opt/gitlab/embedded/service/gitlab-rails/gems
-```
-
-Clone the opdo-rails repository :
-
-```
-git clone https://github.com/epfl-si/opdo-rails.git
-```
-
-In the Gemfile, add the reference to the cloned gem :
-
-```
-# OPDo for EPFL logs
-gem 'opdo_epfl_spymiddleware', "~> 1.0.0", path: 'gems/opdo-rails'
-```
-
-Restart the application, p.e. for gitlab : 
-
-```
-gitlab-ctl restart 
-```
-
-A log file will be created in ```/tmp/opdo_epfl_spymiddleware.csv```
-
+- ruby version >= 3.0.0
 
 # Development
 
-Go to gitlab initializers repository
-
+1. add the gem in your Gemfile
 ```
-cd /opt/gitlab/embedded/service/gitlab-rails/config/initializers
+gem "opdo_epfl_spymiddleware", git: 'https://github.com/epfl-si/opdo-rails.git'
+```
+2. run bundle
+```
+bundle install
+```
+3. add the middleware in your configuration file, ```config/application.rb``` (at the end of the file or inside the section Application < Rails::Application)
+```
+config.middleware.use OPDO_EPFL_Middleware::Middleware
+```
+4. restart the application
+   i.e. if you works in GDK:
+```
+gdk restart
 ```
 
-Add file : opdo_epfl_spymiddleware.rb in the initializers repository
-
-Restart gitlab : 
-
-```
-gitlab-ctl restart 
-```
-
-A log file will be created in ```/tmp/opdo_epfl_spymiddleware.log```
+A log file will be created at /tmp/opdo_epfl_spymiddleware.log, in which every action will be recorded.
